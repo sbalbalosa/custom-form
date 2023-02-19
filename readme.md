@@ -68,9 +68,9 @@ The name prop allows the library to register and track the state of the input.
 
 ---
 
-### Validations
+### Validation
 
-Valdiations are tied to input and the way to register a list of validators is thru
+Valdiation are tied to input and the way to register a list of validators is thru
 the `validations` prop of `Input` and `ControlledInput`
 
 NOTE: There are only 2 validations as of now. `minLength` and `isEmail` this could be easily extended.
@@ -140,6 +140,7 @@ This is a proof of concept and there are lot of things to consider in regards to
 3. Popular validation library extension
 4. Progressive enhancement
 5. Nested form
+6. No linting on this project so you might see inconsistent formatting.
 
 And more!
 
