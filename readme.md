@@ -141,6 +141,7 @@ This is a proof of concept and there are lot of things to consider in regards to
 4. Progressive enhancement
 5. Nested form
 6. No linting on this project so you might see inconsistent formatting.
+7. Proper way to add default value
 
 And more!
 
