@@ -5,7 +5,4 @@ export { default as Error } from "./error";
 export { default as InjectForm } from "./InjectForm";
 export { default as InjectFields } from "./InjectFields";
 
-export {
-  isEmail,
-  minLength
-} from './validations';
+export { isEmail, minLength } from "./validations";

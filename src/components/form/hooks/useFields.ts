@@ -1,24 +1,23 @@
-import  { useFormSelector } from '../store';
+import { useFormSelector } from "../store";
 import { FieldState } from "../types";
 
 export default function useFields<T>(names: string[]) {
-    const selected = useFormSelector((state) => {
-        let fields: FieldState = {};
+  const selected = useFormSelector((state) => {
+    let fields: FieldState = {};
 
-        for(const name of names) {
-            const currentField = state.fields[name];
+    for (const name of names) {
+      const currentField = state.fields[name];
 
-            if (currentField) {
-                fields = {
-                    ...fields,
-                    [name]: currentField
-                }
-            }
-        }
+      if (currentField) {
+        fields = {
+          ...fields,
+          [name]: currentField,
+        };
+      }
+    }
 
-        return fields;
+    return fields;
+  }) as T;
 
-    }) as T;
-
-    return selected;
+  return selected;
 }

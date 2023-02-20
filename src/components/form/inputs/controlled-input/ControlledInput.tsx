@@ -7,69 +7,69 @@ import { setFieldError, setFieldTouch, setFieldValue } from "../../store/store";
 import { useField } from "../../hooks";
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
-    name: string;
-    validations?: Validation[];
-}
+  name: string;
+  validations?: Validation[];
+};
 
-type ControlledProps = Pick<Props, 'value' | 'onChange' | 'onBlur'>;
+type ControlledProps = Pick<Props, "value" | "onChange" | "onBlur">;
 
 export default function ControlledInput(props: Props) {
-    const { dispatch, setFieldValidations } = useContext(FormContext);
+  const { dispatch, setFieldValidations } = useContext(FormContext);
 
-    const error = useField<FieldError>(props.name ?? '', 'error');
-    const value = useField<FieldValue>(props.name ?? '', 'value');
-    const touched = useField<FieldTouched>(props.name ?? '', 'touched');
+  const error = useField<FieldError>(props.name ?? "", "error");
+  const value = useField<FieldValue>(props.name ?? "", "value");
+  const touched = useField<FieldTouched>(props.name ?? "", "touched");
 
-    const { validations, ...domProps } = props;
+  const { validations, ...domProps } = props;
 
-    useEffect(() => {
-        if (props.name) {
-            setFieldValidations(
-                props.name,
-                validations ?? []
-            )
-        }
-    }, [validations, props.name, setFieldValidations]);
-
-
-    let isInvalid;
-    if (touched) {
-        isInvalid = error ? true : false;
+  useEffect(() => {
+    if (props.name) {
+      setFieldValidations(props.name, validations ?? []);
     }
+  }, [validations, props.name, setFieldValidations]);
 
-    const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-        const { name, value } = event.currentTarget;
+  let isInvalid;
+  if (touched) {
+    isInvalid = error ? true : false;
+  }
 
-        dispatch(setFieldValue(name, value));
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const { name, value } = event.currentTarget;
 
-        startTransition(() => {
-            const validators = validations ?? [];
+    dispatch(setFieldValue(name, value));
 
-            const error = validate(value ?? '', validators);
+    startTransition(() => {
+      const validators = validations ?? [];
 
-            dispatch(setFieldError(name, error ?? undefined));
-            dispatch(setFieldTouch(name, true));
-        });
-    }
+      const error = validate(value ?? "", validators);
 
-    const handleBlur = (event: React.FormEvent<HTMLInputElement>) => {
-        const { name, value } = event.currentTarget;
-        const validators = validations ?? [];
+      dispatch(setFieldError(name, error ?? undefined));
+      dispatch(setFieldTouch(name, true));
+    });
+  };
 
-        const error = validate(value, validators);
+  const handleBlur = (event: React.FormEvent<HTMLInputElement>) => {
+    const { name, value } = event.currentTarget;
+    const validators = validations ?? [];
 
-        dispatch(setFieldError(name, error ?? undefined));
-        dispatch(setFieldTouch(name, true));
-    }
+    const error = validate(value, validators);
 
-    const controlledProps: ControlledProps = {};
+    dispatch(setFieldError(name, error ?? undefined));
+    dispatch(setFieldTouch(name, true));
+  };
 
+  const controlledProps: ControlledProps = {};
 
-    controlledProps.onChange = handleChange;
-    controlledProps.value = (props.name && value) ?? '';
-    controlledProps.onBlur = handleBlur;
+  controlledProps.onChange = handleChange;
+  controlledProps.value = (props.name && value) ?? "";
+  controlledProps.onBlur = handleBlur;
 
-    return (
-        <input {...domProps} {...controlledProps} aria-invalid={isInvalid} data-testid="controlled-input" />
-    )
+  return (
+    <input
+      {...domProps}
+      {...controlledProps}
+      aria-invalid={isInvalid}
+      data-testid="controlled-input"
+    />
+  );
 }
